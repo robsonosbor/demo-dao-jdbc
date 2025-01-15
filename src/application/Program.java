@@ -2,19 +2,24 @@ package application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.DepartmentDao;
 import model.dao.SellerDao;
+import model.dao.impl.DepartmentDaoJdbc;
 import model.entities.Department;
 import model.entities.Seller;
 
 public class Program {
 
 	public static void main(String[] args) {
-		//Department obj = new Department(1, "Books");
+		Scanner sc = new Scanner(System.in);
 		
-		//Seller seller = new Seller(1, "Bob", "bob@gmail.com", new Date(), 3000.0, obj);
+		/* Sellers test
+		Department obj = new Department(1, "Books");
+		
+		Seller seller = new Seller(1, "Bob", "bob@gmail.com", new Date(), 3000.0, obj);
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		DepartmentDao depDao = DaoFactory.createDepartmentDao();
@@ -50,7 +55,43 @@ public class Program {
 		System.out.println("\n===== TEST 6: seller delete =====");
 		sellerDao.deleteById(11);
 		System.out.println("Delete completed");
+	*/
+		
+		// Department tests
+		System.out.println("===== TEST 1: department findAll =====");
+		DepartmentDao dep = DaoFactory.createDepartmentDao();
+		for(Department d : dep.findAll())
+			System.out.println(d);
+		
+		System.out.println("\n===== TEST 2: department findById =====");
+		System.out.print("Enter Department ID to find: ");
+		int id = sc.nextInt();
+		Department d = dep.findById(id);
+		if(d != null)
+			System.out.println(d);
+		else
+			System.out.println("Department no found.");
+		
+		System.out.println("\n===== TEST 3: department insert =====");
+		sc.nextLine();
+		System.out.print("Enter Department name to insert: ");	
+		String depName = sc.nextLine();
+		dep.insert(new Department(null, depName));
 
+		System.out.println("\n===== TEST 4: department update =====");
+		System.out.println("Enter Department id and new name to update: ");
+		dep.update(new Department(8, "Furniture"));
+		
+		System.out.println("\n===== TEST 5: department delete =====");
+		System.out.print("Enter Department id to delete: ");		
+		id = sc.nextInt();
+		dep.deleteById(id);
+		
+		
+		
+		
+		sc.close();
+		
 	}
 
 }
